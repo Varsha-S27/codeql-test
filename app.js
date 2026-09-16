@@ -1,13 +1,12 @@
 const express = require("express");
-
 const app = express();
 
 app.get("/search", (req, res) => {
-    const query = req.query.q;
+    const userInput = req.query.q;
 
-    // Intentionally vulnerable:
-    // User-controlled input is passed directly to eval().
-    const result = eval(query);
+    // INTENTIONALLY VULNERABLE
+    // CodeQL should identify user-controlled input flowing into eval().
+    const result = eval(userInput);
 
     res.send(String(result));
 });
